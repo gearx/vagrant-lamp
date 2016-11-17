@@ -8,6 +8,24 @@ A Vagrant configuration for building a LAMP base box
 * Ruby 2.0
 * vim, git, sendmail, xdebug, ioncube
 
+## Using This Base Box
+
+This base box is hosted here on Hashicorp Atlas https://atlas.hashicorp.com/gearx/boxes/lamp/.
+To create a dev environment from it, add this to a project's Vagrantfile:
+
+    Vagrant.configure("2") do |config|
+    
+        config.vm.box = "gearx/lamp"
+    
+    end
+
+
+
+
+## Packaging The Base Box For Testing
+
+These are the steps required to build and test a new version of the base box.
+
 #### Build the VM
 
     vagrant up
@@ -23,13 +41,21 @@ A Vagrant configuration for building a LAMP base box
     vagrant destroy
     
     
-#### Add the box to your Vagrant Install
+#### Add the box to your Vagrant Install and Test It
 
     vagrant box add gearx-lamp gearx-lamp.box
     
     
-Now more specific boxes can be built off this base box by including this line in their Vagrantfile
+Test using the base box in a projecrt by including this line in a new Vagrantfile and running `vagrant up`
 
-    config.vm.box = "gearx-lamp"
+    Vagrant.configure("2") do |config|
     
+        config.vm.box = "gearx-lamp"
+    
+    end
+    
+#### Upload To Hashicorp Atlas
+
+Upload the generated gearx-lamp.box file to the Hashicorp Atlas the the web interface.
+
     
