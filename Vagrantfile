@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/trusty64"
 
-  config.vm.define "vagrant-lamp" do |lamp|
+  config.vm.define "gearx-lamp-base" do |lamp|
   end
   
   config.vm.provision "install",  type: "shell",  path: "install.sh"
@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 2048
     vb.cpus = 1
-    vb.name = "vagrant-lamp"
+    vb.name = "vagrant-gearx-lamp-base"
   end
 
 end

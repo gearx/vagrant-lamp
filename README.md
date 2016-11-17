@@ -28,7 +28,7 @@ A Vagrant configuration for building a LAMP base box
     vagrant box add gearx-lamp gearx-lamp.box
     
     
-Now more specific boxes can be built off this base box by includeing this line in their Vagrantfile
+Now more specific boxes can be built off this base box by including this line in their Vagrantfile
 
     config.vm.box = "gearx-lamp"
     
