@@ -21,7 +21,7 @@ apt-get install -y nfs-common libcurl3 vim git sendmail
 # --------------------
 apt-get install -y apache2
 
-apt-get install -y php5.5 php5.5-mcrypt php5.5-curl php5.5-cli php5.5-mysql php5.5-gd php5.5-xml php5.5-soap php-xdebug libapache2-mod-php5
+apt-get install -y php5.5 php5.5-mcrypt php5.5-curl php5.5-cli php5.5-mysql php5.5-gd php5.5-xml php5.5-soap php5.5-mbstring php-xdebug libapache2-mod-php5
 
 
 
