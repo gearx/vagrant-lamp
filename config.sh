@@ -51,6 +51,7 @@ echo  "Configuring xDebug ..."
 cp /home/vagrant/xdebug.ini /etc/php/5.5/mods-available/xdebug.ini
 cp /home/vagrant/xdebug.ini /etc/php/5.6/mods-available/xdebug.ini
 cp /home/vagrant/xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
+rm /home/vagrant/xdebug.ini
 
 
 echo "Changing Apache to run as vagrant user ..."
