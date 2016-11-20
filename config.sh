@@ -48,9 +48,9 @@ ln -fs /etc/php/7.0/php-custom.ini /etc/php/7.0/apache2/conf.d/01-php-custom.ini
 
 echo  "Configuring xDebug ..."
 # ---------------------------
-cp /var/www/html/vagrant/xdebug.ini /etc/php/5.5/mods-available/xdebug.ini
-cp /var/www/html/vagrant/xdebug.ini /etc/php/5.6/mods-available/xdebug.ini
-cp /var/www/html/vagrant/xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
+cp /home/vagrant/xdebug.ini /etc/php/5.5/mods-available/xdebug.ini
+cp /home/vagrant/xdebug.ini /etc/php/5.6/mods-available/xdebug.ini
+cp /home/vagrant/xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
 
 
 echo "Changing Apache to run as vagrant user ..."

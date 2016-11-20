@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "file",   source: "setphp.sh", destination: "~/setphp.sh"
+  config.vm.provision "file",   source: "xdebug.ini", destination: "~/xdebug.ini"
   config.vm.provision "install",  type: "shell",  path: "install.sh"
   config.vm.provision "config",   type: "shell",  path: "config.sh"
   config.vm.provision "cleanup",   type: "shell",  path: "cleanup.sh"
