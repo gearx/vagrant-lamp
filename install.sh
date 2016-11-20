@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-# Add PHP and Percona Repos, then update Apt
+echo "Adding PHP and Percona Repos ..."
 # --------------------
 add-apt-repository -y ppa:ondrej/php
 
@@ -12,54 +12,36 @@ rm -f percona-release_0.1-4.trusty_all.deb
 apt-get update
 
 
-# Install some basic tools
+echo "Installing some basic tools ..."
 # --------------------
 apt-get install -y nfs-common libcurl3 vim git sendmail
 
 
-# Install Apache & PHP
+echo "Installing Apache ..."
 # --------------------
 apt-get install -y apache2
 
-apt-get install -y php5.5 php5.5-mcrypt php5.5-curl php5.5-cli php5.5-mysql php5.5-gd php5.5-xml php5.5-soap php5.5-mbstring php-xdebug libapache2-mod-php5
-
-
-
-# Replace contents of default Apache vhost
+echo "Installing PHP 5.5 and modules ..."
 # --------------------
-VHOST=$(cat <<EOF
-NameVirtualHost *:8080
-Listen 8080
-<VirtualHost *:80>
-  DocumentRoot "/var/www/html"
-  ServerName localhost
-  <Directory "/var/www/html">
-    AllowOverride All
-  </Directory>
-</VirtualHost>
-<VirtualHost *:8080>
-  DocumentRoot "/var/www/html"
-  ServerName localhost
-  <Directory "/var/www/html">
-    AllowOverride All
-  </Directory>
-</VirtualHost>
-EOF
-)
+apt-get install -y php5.5 php5.5-mcrypt php5.5-curl php5.5-cli php5.5-mysql php5.5-gd php5.5-xml php5.5-soap php5.5-mbstring php-xdebug libapache2-mod-php5.5
 
-echo "$VHOST" > /etc/apache2/sites-enabled/000-default.conf
+echo "Installing PHP 5.6 and modules ..."
+# --------------------
+apt-get install -y php5.6 php5.6-mcrypt php5.6-curl php5.6-cli php5.6-mysql php5.6-gd php5.6-xml php5.6-soap php5.6-mbstring php-xdebug libapache2-mod-php5.6
 
-a2enmod rewrite
-service apache2 restart
+echo "Installing PHP 7.0 and modules ..."
+# --------------------
+apt-get install -y php7.0 php7.0-mcrypt php7.0-curl php7.0-cli php7.0-mysql php7.0-gd php7.0-xml php7.0-soap php7.0-mbstring php-xdebug libapache2-mod-php7.0
 
 
-# Remove default Apache file from web root
-# ----------------
-rm -f /var/www/html/index.html
+# Install setphp script as shell command
+# --------------------
+mv /home/vagrant/setphp.sh /usr/local/bin/setphp
 
 
-# Install Percona (MySQL)
-# -----------------------
+
+echo "Installing Percona 5.5 (MySQL) ..."
+# --------------------
 # Prep root password for noninteractive install
 export DEBIAN_FRONTEND=noninteractive
 sudo debconf-set-selections <<< "percona-server-server-5.5 percona-server-server/root_password password mysql"
@@ -81,30 +63,39 @@ mysql -uroot -pmysql -e "$GRANT"
 
 
 
-# Install IonCube for PHP
-# ------------------------
-echo "Installing IonCube Loader ..."
+echo "Installing IonCube Loader PHP module ..."
+# --------------------
 wget -nv http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 tar -zxvf ioncube_loaders_lin_x86-64.tar.gz
 rm ioncube_loaders_lin_x86-64.tar.gz
 
 cp ioncube/ioncube_loader_lin_5.5.so ioncube/ioncube_loader_lin_5.5_ts.so /usr/lib/php/20121212/
+cp ioncube/ioncube_loader_lin_5.6.so ioncube/ioncube_loader_lin_5.6_ts.so /usr/lib/php/20131226/
+cp ioncube/ioncube_loader_lin_7.0.so ioncube/ioncube_loader_lin_7.0_ts.so /usr/lib/php/20151012/
 rm -rf ioncube
 
 echo "zend_extension = ioncube_loader_lin_5.5.so" > /etc/php/5.5/mods-available/ioncube.ini
 ln -fs /etc/php/5.5/mods-available/ioncube.ini /etc/php/5.5/apache2/conf.d/05-ioncube.ini
 ln -fs /etc/php/5.5/mods-available/ioncube.ini /etc/php/5.5/cli/conf.d/05-ioncube.ini
+echo "zend_extension = ioncube_loader_lin_5.6.so" > /etc/php/5.6/mods-available/ioncube.ini
+ln -fs /etc/php/5.6/mods-available/ioncube.ini /etc/php/5.6/apache2/conf.d/05-ioncube.ini
+ln -fs /etc/php/5.6/mods-available/ioncube.ini /etc/php/5.6/cli/conf.d/05-ioncube.ini
+echo "zend_extension = ioncube_loader_lin_7.0.so" > /etc/php/7.0/mods-available/ioncube.ini
+ln -fs /etc/php/7.0/mods-available/ioncube.ini /etc/php/7.0/apache2/conf.d/05-ioncube.ini
+ln -fs /etc/php/7.0/mods-available/ioncube.ini /etc/php/7.0/cli/conf.d/05-ioncube.ini
 
 
-# Install RVM & Ruby so it's ready to go for installing any dependencies
+echo "Installing RVM ..."
 # Switch to vagrant user session so rvm is installed properly, then exit after
-# -------------------
+# --------------------
 apt-get -y remove ruby
 curl -sSL https://rvm.io/mpapis.asc | gpg --import -
 curl -sSL get.rvm.io | bash -s stable --ignore-dotfiles
 source /usr/local/rvm/scripts/rvm
 usermod -a -G rvm vagrant
 
+echo "Installing Ruby 2.0.0 ..."
+# --------------------
 su - vagrant -c "rvm --quiet-curl install 2.0.0"
 su - vagrant -c "gem update -q --system"
 

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# Remove unnecessary packages
-apt-get autoremove
+echo "Removing unnecessary packages ..."
+apt-get autoremove -y
 
-# Remove APT cache
-apt-get clean
+echo "Removing APT cache ..."
+apt-get clean -y
 
-# Zero out drive
-dd if=/dev/zero of=/EMPTY bs=1M
-rm -f /EMPTY
+echo "Zeroing Out empty drive space ..."
+sudo dd if=/dev/zero of=/EMPTY bs=1M
+sudo rm -f /EMPTY
 
-# Clear shell history
+echo "Clearing shell history ..."
 history -c
