@@ -33,7 +33,7 @@ chown -R vagrant:vagrant .
 echo "Replacing MySQL config file (my.cnf) ..."
 # ---------------------------
 [ ! -f /etc/mysql/original-my.cnf ] && mv /etc/mysql/my.cnf /etc/mysql/original-my.cnf
-cp -f /var/www/html/vagrant/my.cnf /etc/mysql/my.cnf
+mv /home/vagrant/my.cnf /etc/mysql/my.cnf
 
 
 echo  "Creating Custom PHP ini for overrides ..."
