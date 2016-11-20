@@ -4,7 +4,7 @@ A Vagrant configuration for building a LAMP base box
 * Ubuntu 14.04 - Trusty Tahr
 * Apache 2
 * MySQL 5.5 (Percona)
-* PHP 5.5
+* PHP 5.5, 5.6, and 7.0
 * Ruby 2.0
 * vim, git, sendmail, xdebug, ioncube
 
@@ -19,7 +19,13 @@ To create a dev environment from it, add this to a project's Vagrantfile:
     
     end
 
+## Switching PHP Versions
 
+There is a small script installed as a system command `setphp` for switching the active PHP version.  It will enable the appropriate Apache module, and switch the cli interpreter.  Use it like this:
+
+    setphp 5.5
+    setphp 5.6
+    setphp 7.0
 
 
 ## Packaging The Base Box For Testing
